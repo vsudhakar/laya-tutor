@@ -1,0 +1,122 @@
+/*
+Laya Tutor
+Visrut Sudhakar, 2018
+*/
+
+/* Solarized Colors */
+:root {
+	--main-bg-color: tomato;
+	--base03:    #002b36;
+	--base02:    #073642;
+	--base01:    #586e75;
+	--base00:    #657b83;
+	--base0:     #839496;
+	--base1:     #93a1a1;
+	--base2:     #eee8d5;
+	--base3:     #fdf6e3;
+	--yellow:    #b58900;
+	--orange:    #cb4b16;
+	--red:       #dc322f;
+	--magenta:   #d33682;
+	--violet:    #6c71c4;
+	--blue:      #268bd2;
+	--cyan:      #2aa198;
+	--green:     #859900;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	min-height: 100vh;
+}
+
+#app-container {
+	flex: 1;
+	display: flex;
+	align-items: stretch;
+}
+
+.app-sidebar {
+	width: 20%;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	font-size: 12px;
+	background-color: var(--base3);
+	color: var(--base0);
+	font-family: 'Open Sans', sans-serif;
+}
+
+.app-main {
+	padding-top: 10px;
+	padding-left: 30px;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Lato', sans-serif;
+	background-color: var(--base2);
+	color: var(--base00);
+}
+
+.highlight-bar {
+	padding-left: 10px;
+	/*background-color: var(--yellow);*/
+	color: var(--blue);
+	font-size: 15px;
+}
+
+.nav-form {
+	margin: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.nav-form .button-fileselect {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+/* Style for file input */
+.nav-form .button-fileselect + label {
+	width: auto;
+	padding: 5px;
+	margin-right: 10%;
+	border-radius: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    background-color: var(--orange);
+    display: inline-block;
+}
+
+.nav-form .button-fileselect:focus + label,
+.nav-form .button-fileselect + label:hover {
+	background-color: var(--red);
+}
+
+.nav-form .button-render {
+	padding: 5px;
+	font-size: 12px;
+	font-weight: 700;
+	border-radius: 2px;
+	border: 0;
+	background-color: var(--base2);
+}
+
+.nav-form .button-render:hover {
+	background-color: var(--base1);
+}
+
+.paragraph {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.text {
+	width: 33%;
+}
