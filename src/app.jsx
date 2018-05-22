@@ -8,10 +8,8 @@ import path from 'path';
 import NavigationPanel from './components/NavigationPanel.jsx';
 import ContentPanel from './components/ContentPanel.jsx';
 
-let currappmode = 'Render';
-
 /* App Components */
-class App extends React.Component {
+export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -59,9 +57,4 @@ class App extends React.Component {
 		)
 	}
 }
-
-ReactDOM.render(
-	<App appmode={currappmode} />,
-	document.getElementById('app-container')
-)
 
