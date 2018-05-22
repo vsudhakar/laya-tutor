@@ -118,5 +118,12 @@ body {
 }
 
 .text {
-	width: 33%;
+	flex: 1;
+	text-align: center;
+}
+
+.textContainer {
+	display: flex;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
