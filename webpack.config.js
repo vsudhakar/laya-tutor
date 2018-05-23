@@ -1,39 +1,63 @@
-var webpack = require('webpack');
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
 
-module.exports = {
-  entry: path.join(__dirname, 'app/app.jsx'),
+const port = process.env.PORT || '8080';
 
-  target: 'electron-main',
-
-  module: {
-    rules: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true
-        }
-      }
-    }]
-  },
-
+const config = {
+  context: __dirname,
+  entry: [
+    'babel-polyfill',
+    path.resolve(__dirname, './renderer.js'),
+    `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
+  ],
+  target: 'electron-renderer',
   output: {
-    path: path.join(__dirname, 'built'),
+    filename: 'renderer.bundle.js',
+    path: __dirname + '/bundle',
+    publicPath: `http://localhost:${port}/bundle/`,
     libraryTarget: 'commonjs2'
   },
+  module: {
+    rules: [
 
-  resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-    modules: [
-      path.join(__dirname, 'app'),
-      'node_modules'
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: "babel-loader"
+      },
+      
+      {
+
+        test: /\.jsx?$/,
+        include: [
+          path.join(__dirname, 'src'),
+          path.join(__dirname, 'renderer.js')
+        ],
+        exclude: /node_modules/,
+
+        loader: 'babel-loader',
+        
+        options: {
+          presets: ['env', 'react', 'react-hmre']
+        }
+      },
+
+      {
+        test: /\.css$/,
+        include: [
+          path.join(__dirname, 'src/styles')
+        ],
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
+      }
+
     ]
   },
-
   plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
+    new webpack.HotModuleReplacementPlugin(),
   ]
-}
+};
+
+module.exports = config;

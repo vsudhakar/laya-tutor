@@ -1,1 +1,0 @@
-"watch": "watchify app/app.js -t babelify -o public/js/bundle.js --debug --verbose"
