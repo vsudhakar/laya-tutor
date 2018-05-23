@@ -3,10 +3,16 @@ import React from 'react';
 /* Import constants */
 import {TAALAMS} from '../constants/AppConstants.js';
 
-/* Track anga, matra, akshara over renders */
+/* Import Variables */
 var storeAnga = 0;
 var storeAkshara = 0;
 var storeMatra = 0;
+
+export var resetTalaCounters = function() {
+	storeAnga = 0;
+	storeAkshara = 0;
+	storeMatra = 0;
+}
 
 class MatraComponent extends React.Component {
 	constructor(props) {
@@ -64,7 +70,7 @@ class AngaComponent extends React.Component {
 	}
 }
 
-class ParagraphComponent extends React.Component {
+export class ParagraphComponent extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -201,5 +207,3 @@ class ParagraphComponent extends React.Component {
 		)
 	}
 }
-
-export default ParagraphComponent;

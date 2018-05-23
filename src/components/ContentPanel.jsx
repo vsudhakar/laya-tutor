@@ -2,6 +2,9 @@ import React from 'react';
 
 import {renderTree} from '../scripts/renderer.jsx'
 
+/* Import global variables */
+import {resetTalaCounters} from './Paragraph.jsx';
+
 
 class ContentPanel extends React.Component {
 	constructor(props) {
@@ -19,6 +22,7 @@ class ContentPanel extends React.Component {
 
 	render() {
 		// Parse data
+		resetTalaCounters();
 		console.log("Kaalam in Control Panel: " + this.props.kaalam);
 		var content = [];
 		if (this.props.data !== null) {

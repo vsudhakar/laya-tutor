@@ -6,7 +6,7 @@ import {TAALAMS} from '../constants/AppConstants.js';
 
 /* Import components */
 import HeaderComponent from '../components/Header.jsx';
-import ParagraphComponent from '../components/Paragraph.jsx';
+import {ParagraphComponent} from '../components/Paragraph.jsx';
 import TextComponent from '../components/Text.jsx';
 
 /* TEMPORARY VARIABLES */
