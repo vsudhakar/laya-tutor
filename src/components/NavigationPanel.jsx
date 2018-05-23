@@ -1,7 +1,9 @@
 import React from 'react';
 
-import {renderTree} from '../scripts/renderer.jsx'
-import {renderTreeHeaders} from '../scripts/renderer.jsx'
+import {renderTree} from '../scripts/renderer.jsx';
+import {renderTreeHeaders} from '../scripts/renderer.jsx';
+
+import RenderSettingsPanel from './RenderSettingsPanel.jsx';
 
 class FileInfoBar extends React.Component {
 	render() {
@@ -140,6 +142,13 @@ class NavigationPanel extends React.Component {
 						Open
 					</button>
 				</form>
+
+				<br />
+
+				<RenderSettingsPanel taalam={this.props.taalam} kaalam={this.props.kaalam} updateHandler={this.props.settingsHandler}/>
+
+				<br />
+
 				<HierarchyPanelComponent data={navdata} level={1} />
 			</div>
 		)

@@ -42,8 +42,12 @@ body {
 	flex-direction: column;
 	align-content: center;
 	font-size: 12px;
+	/*
 	background-color: var(--base3);
 	color: var(--base0);
+	*/
+	background-color: var(--base02);
+	color: var(--base00);
 	font-family: 'Open Sans', sans-serif;
 }
 
@@ -54,8 +58,12 @@ body {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Lato', sans-serif;
+	/*
 	background-color: var(--base2);
 	color: var(--base00);
+	*/
+	background-color: var(--base03);
+	color: var(--base01);
 }
 
 .highlight-bar {
@@ -112,8 +120,8 @@ body {
 }
 
 .paragraph {
-	display: inline-flex;
-	flex-direction: row;
+	display: flex;
+	flex-direction: column;
 	flex-wrap: wrap;
 }
 
@@ -121,9 +129,28 @@ body {
 	flex: 1;
 	text-align: center;
 }
+/* Content Rendering Styles */
+.matra {
+	flex: 1;
+}
 
-.textContainer {
+.akshara {
+	flex: 1;
 	display: flex;
+	padding-left: 10%;
+	padding-right: 10%;
+	border-left: 2px solid var(--yellow);
+	border-right: 2px solid var(--yellow);
+}
+
+.anga {
+	display: flex;
+	flex-direction: row;
 	margin-top: 30px;
 	margin-bottom: 30px;
+	width: 100%;
+}
+
+.avarthanam {
+	
 }

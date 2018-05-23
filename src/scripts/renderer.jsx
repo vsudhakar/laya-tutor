@@ -12,7 +12,7 @@ import TextComponent from '../components/Text.jsx';
 /* TEMPORARY VARIABLES */
 let DEFAULT_TAALAM = TAALAMS.triputa;
 let DEFAULT_JAATHI = 4;
-let DEFAULT_KAALAM = 1;
+let DEFAULT_KAALAM = 2;
 let DEFAULT_NADAI  = 4;
 
 var GLOBAL_TAALAM = JSON.stringify(DEFAULT_TAALAM);
@@ -34,13 +34,18 @@ function cleanUpperText(str) {
 	}
 }
 
-export function renderTree(obj, currlevel, content) {
+/*
+	TODO
+	Cleaner way of passing data to these 'orphaned' paragraphs
+*/
+export function renderTree(obj, currlevel, content, taalam, kaalam) {
+	console.log("Render Tree Kaalam: " + kaalam);
 	if (Object.prototype.toString.call(obj) === '[object Object]') {
 		Object.entries(obj).forEach(([key, value]) => {
 			// Render header
 			content.push(<HeaderComponent text={key.replace(/['"']+/g, '')} level={currlevel}/>);
 			// Recurse
-			content = renderTree(value, currlevel, content);
+			content = renderTree(value, currlevel, content, taalam, kaalam);
 		});
 	} else {
 		if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -50,10 +55,10 @@ export function renderTree(obj, currlevel, content) {
 				if (Object.prototype.toString.call(o) === '[object Object]') {
 					// Recurse
 					if (parContent.length >  0) {
-						content.push(<ParagraphComponent content={parContent} taalam={GLOBAL_TAALAM} jaathi={GLOBAL_JAATHI} kaalam={GLOBAL_KAALAM} nadai={GLOBAL_NADAI} />);
+						content.push(<ParagraphComponent content={parContent} taalam={taalam} jaathi={GLOBAL_JAATHI} kaalam={kaalam} nadai={GLOBAL_NADAI} />);
 						parContent = [];
 					}
-					content = renderTree(o, currlevel+1, content);
+					content = renderTree(o, currlevel+1, content, taalam, kaalam);
 				} else {
 					// Decode
 					o = Number(o);
@@ -75,7 +80,7 @@ export function renderTree(obj, currlevel, content) {
 				}
 			}
 			if (parContent.length >  0) {
-				content.push(<ParagraphComponent content={parContent} taalam={GLOBAL_TAALAM} jaathi={GLOBAL_JAATHI} kaalam={GLOBAL_KAALAM} nadai={GLOBAL_NADAI} />);
+				content.push(<ParagraphComponent content={parContent} taalam={taalam} jaathi={GLOBAL_JAATHI} kaalam={kaalam} nadai={GLOBAL_NADAI} />);
 				parContent = [];
 			}
 		}

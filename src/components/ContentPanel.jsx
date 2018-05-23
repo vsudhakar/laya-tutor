@@ -19,10 +19,11 @@ class ContentPanel extends React.Component {
 
 	render() {
 		// Parse data
+		console.log("Kaalam in Control Panel: " + this.props.kaalam);
 		var content = [];
 		if (this.props.data !== null) {
-			content = renderTree(JSON.parse(this.props.data), 1, []);
-		} 
+			content = renderTree(JSON.parse(this.props.data), 1, [], this.props.taalam, this.props.kaalam);
+		}
 		return (
 			<div className="app-main">
 				<React.Fragment>

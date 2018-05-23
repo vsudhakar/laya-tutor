@@ -3,15 +3,62 @@ import React from 'react';
 /* Import constants */
 import {TAALAMS} from '../constants/AppConstants.js';
 
-class ContainerComponent extends React.Component {
+/* Track anga, matra, akshara over renders */
+var storeAnga = 0;
+var storeAkshara = 0;
+var storeMatra = 0;
+
+class MatraComponent extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render () {
+		return(
+			<div class="matra">
+				{this.props.data}
+			</div>
+		)
+	}
+}
+
+class AksharaComponent extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return(
+			<div class="akshara">
+				{this.props.data}
+			</div>
+		)
+	}
+}
+
+class AvarthanamComponent extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return(
+			<div class="avarthanam">
+				{this.props.data}
+			</div>
+		)
+	}
+}
+
+class AngaComponent extends React.Component {
 	constructor(props) {
 		super(props)
 	}
 
 	render() {
 		return (
-			<div className="textContainer" style={this.props.style}>
-				{this.props.content}
+			<div className="anga">
+				{this.props.data}
 			</div>
 		)
 	}
@@ -34,10 +81,21 @@ class ParagraphComponent extends React.Component {
 	render() {
 		var loopStruct = [];
 
+		console.log(this.props.taalam);
+
 		/* Switch for Taalam */
-		switch (this.state.taalam) {
+		if(this.props.taalam === TAALAMS.roopaka.name) {
+			//structure: 0 1
+			loopStruct = [2, Number(this.state.jaathi)];
+		} else {
+			// structure 1 0 0
+			console.log(this.props.taalam + " NOT " + TAALAMS.roopaka.name);
+			loopStruct = [this.state.jaathi, 2, 2];
+		}
+
+		/*switch (this.props.taalam) {
 			// TODO
-			case JSON.stringify(TAALAMS.roopaka):
+			case TAALAMS.roopaka.name:
 				//structure: 0 1
 				loopStruct = [2, Number(this.state.jaathi)];
 				break;
@@ -45,9 +103,58 @@ class ParagraphComponent extends React.Component {
 				// structure 1 0 0
 				loopStruct = [this.state.jaathi, 2, 2];
 				break;
-		}
+		}*/
 
 		/* Group content into containers */
+		var curAnga	   = storeAnga;
+		var curAkshara = storeAkshara;
+		var curMatra   = storeMatra;
+		var maxMatra   = Math.pow(2, Number(this.props.kaalam)-1);
+		console.log("Kaalam in ParagraphComponent: " + this.props.kaalam);
+		console.log("Matra per Akshara: " + maxMatra);
+		var aggContent = [];
+		var aksharaContent = [];
+		var angaContent  = [];
+		var avarthanamContent = [];
+		for(var i = 0; i < this.state.content.length; i++) {
+
+			if (curMatra == maxMatra) {
+				angaContent.push(<AksharaComponent data={aksharaContent} />);
+				aksharaContent = [];
+				curMatra = 0;
+				curAkshara += 1;
+				if (curAkshara == loopStruct[curAnga]) {
+					avarthanamContent.push(<AngaComponent data={angaContent} />);
+					angaContent = [];
+					curAkshara = 0;
+					curAnga += 1;
+					if (curAnga == loopStruct.length) {
+						aggContent.push(<AvarthanamComponent data={avarthanamContent} />);
+						avarthanamContent = [];
+						curAnga = 0;
+					}
+				}
+			}
+
+			aksharaContent.push(<MatraComponent data={this.state.content[i]} />);
+			curMatra = curMatra + 1;
+			
+		}
+
+		// Push remaining content
+		angaContent.push(<AksharaComponent data={aksharaContent} />);
+		avarthanamContent.push(<AngaComponent data={angaContent} />);
+		aggContent.push(<AvarthanamComponent data={avarthanamContent} />);
+
+		storeMatra = curMatra;
+		storeAkshara = curAkshara;
+		storeAnga = curAnga;
+
+
+/*
+		var perbeat = Math.pow(2, Number(this.state.kaalam)-1);
+		console.log("Per Beat: " + perbeat);
+		var x = 0;
 		var i = 0;
 		var j = 0;	// cycle through parts of talam
 		var k = 0;  // cycle through each beat of each part
@@ -64,12 +171,8 @@ class ParagraphComponent extends React.Component {
 				k = 0;
 				j += 1;
 				// Save and clear curr into container
-				container.push(<ContainerComponent content={curr} style={containerStyle} />);
+				container.push(<ContainerComponent content={curr} />);
 				curr = [];
-				/*if (j == loopStruct.length) {
-					// Save and clear curr into container
-					j = 0;
-				}*/
 				j = j%loopStruct.length;
 			}
 
@@ -77,25 +180,23 @@ class ParagraphComponent extends React.Component {
 			curr.push(this.state.content[i]);
 
 			i += 1;
-			k += 1;
+			x += 1;
+
+			if (x == perbeat) {
+				x = 0;
+				k += 1;
+			}
 
 		}
 
 		// Save curr into container
 		//container.push(<ContainerComponent content={curr} style={containerStyle} />);
 
-		/*return (
-			<React.Fragment>
-			<p>{loopStruct}</p>
-			<p>{JSON.stringify(this.state.taalam)}</p>
-			<p>{JSON.stringify(this.state.jaathi)}</p>
-			<p>{JSON.stringify(this.state.kaalam)}</p>
-			</React.Fragment>
-		)*/
+*/
 
 		return (
 			<div className="paragraph">
-				{container}
+				{aggContent}
 			</div>
 		)
 	}
